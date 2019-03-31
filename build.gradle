@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.5
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'http://maven2.javacv.googlecode.com/git/'
+    }
+}
+
+dependencies {
+    testCompile 'org.testng:testng:6.9.10',
+            'org.seleniumhq.selenium:selenium-java:2.53.0'
+}
+
+test {
+    systemProperty 'env', System.properties['env'] ?: 'ci'
+    useTestNG(){
+        suites 'testng.xml'
+    }
+//    include '**/*Test*.*'
+    testLogging.showStandardStreams = true
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.1'
+}
